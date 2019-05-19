@@ -83,21 +83,21 @@ public class TestOne {
 				System.out.print("Enter a Name To Be Modify City :");
 				name = scanner.next();
 				System.out.print("\nEnter the city name : ");
-				 city = scanner.next();
-				 sql="UPDATE TESTONE SET CITY='" +city+ "'WHERE NAME='" +name+ "' ;";
-				 try {
-					 statement.executeUpdate(sql);
-						System.out.println("'" + city + "'City has been added successfully.\n\n");
-						
-					} catch (SQLTimeoutException e) {
-						System.out.println("Timeout error occured while executing the SQL query : " + sql);
-						
-					}catch (SQLException e) {
-						System.out.println("ERROR CODE: " + e.getErrorCode() + ", ERROR MESSAGE : " + e.getMessage());						
-				 }
-		
-			   break;
-			
+				city = scanner.next();
+				sql = "UPDATE TESTONE SET CITY='" + city + "'WHERE NAME='" + name + "' ;";
+				try {
+					statement.executeUpdate(sql);
+					System.out.println("'" + city + "'City has been added successfully.\n\n");
+
+				} catch (SQLTimeoutException e) {
+					System.out.println("Timeout error occured while executing the SQL query : " + sql);
+
+				} catch (SQLException e) {
+					System.out.println("ERROR CODE: " + e.getErrorCode() + ", ERROR MESSAGE : " + e.getMessage());
+				}
+
+				break;
+
 			case 3:
 
 				System.out.print("Enter a name to be removed : ");
@@ -108,7 +108,7 @@ public class TestOne {
 					if (result == 1) {
 						System.out.println("'" + name + "' has been removed successfully.\n\n");
 					} else {
-				
+
 						System.out.println("'" + name + "' is not present in table.\n\n");
 					}
 				} catch (SQLTimeoutException e) {
@@ -117,16 +117,16 @@ public class TestOne {
 					System.out.println("ERROR CODE: " + e.getErrorCode() + ", ERROR MESSAGE : " + e.getMessage());
 				}
 				break;
-			case 4 :
-	
+			case 4:
+
 				System.out.print("Do you really want to remove all (y/n) : ");
 				String option = scanner.next();
-				if(option.equalsIgnoreCase("y")) {
-					sql="DELETE FROM testone;";
+				if (option.equalsIgnoreCase("y")) {
+					sql = "DELETE FROM testone;";
 					try {
-					statement.executeUpdate(sql);
-					System.out.println("All data deleted from table");
-					}catch (SQLTimeoutException e) {
+						statement.executeUpdate(sql);
+						System.out.println("All data deleted from table");
+					} catch (SQLTimeoutException e) {
 						System.out.println("Timeout error occured while executing the SQL query : " + sql);
 					} catch (SQLException e) {
 						System.out.println("ERROR CODE: " + e.getErrorCode() + ", ERROR MESSAGE : " + e.getMessage());
@@ -134,19 +134,19 @@ public class TestOne {
 				} else {
 					System.out.println("No data removed");
 				}
-				
-			break;
+
+				break;
 
 			case 5:
 				ResultSet rs;
 				System.out.print("Enter a name or City be Searched :");
 				name = scanner.next();
-				
+
 				System.out.println("\n Your Search result...");
-				sql = "SELECT * FROM testone WHERE name = '" +name+ "' OR  city ='" +name+ " ';";
+				sql = "SELECT * FROM testone WHERE name = '" + name + "' OR  city ='" + name + " ';";
 				try {
 					rs = statement.executeQuery(sql);
-					if (rs.next()==false) {
+					if (rs.next() == false) {
 						System.out.println("\n No Data found in Table \n\n");
 					} else {
 						System.out.println("\nSearch Result Given Below\n\n");
@@ -154,9 +154,11 @@ public class TestOne {
 						System.out.println("----------------------------");
 						int id = 0;
 						while (rs.next()) {
-							System.out.println("\t" + ++id + "    " + rs.getString("name") + "      "+ rs.getString("city")+" ");
+							System.out.println("\t" + ++id + "    " + rs.getString("name") + "      "
+									+ rs.getString("city") + " ");
 						}
-						//System.out.println("\t" + rs.getInt("id") + "\t" + rs.getString("name") + "  "+ rs.getString("city")+" ");
+						// System.out.println("\t" + rs.getInt("id") + "\t" + rs.getString("name") + "
+						// "+ rs.getString("city")+" ");
 						System.out.println("----------------------------");
 						System.out.println(id + " row(s) returned");
 						System.out.println("----------------------------");
@@ -172,21 +174,22 @@ public class TestOne {
 			case 6:
 				sql = "SELECT name, city FROM testone";
 				try {
-					
+
 					rs = statement.executeQuery(sql);
-					if(rs.getRow()>0 ) {
+					if (rs.next() == false) {
 						System.out.println("\n No Data found in Table \n\n");
-						
+
 					} else {
-						
+
 						System.out.println("\n    LIST OF DATA IN TABLE ");
 						System.out.println("----------------------------");
 						System.out.println("\tId \t Name \t City");
 						System.out.println("----------------------------");
 						int id = 0;
-						while (rs.next()) {
-							System.out.println("\t" + ++id + "\t" + rs.getString("name") + "\t"+ rs.getString("city")+" ");
-						}
+						do {
+							System.out.println(
+									"\t" + ++id + "\t" + rs.getString("name") + "\t" + rs.getString("city") + " ");
+						} while (rs.next());
 						System.out.println("----------------------------");
 						System.out.println(id + " row(s) returned");
 						System.out.println("----------------------------");
